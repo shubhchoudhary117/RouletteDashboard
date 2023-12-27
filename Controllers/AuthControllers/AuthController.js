@@ -19,12 +19,12 @@ class AuthController {
             });
             // save the new user details
             let addedUser = await newUser.save();
-            res.json({ registered: true, emailExist: false, user: addedUser, internalServerError: false });
+           return res.json({ registered: true, emailExist: false, user: addedUser, internalServerError: false });
          }
       }
       catch (error) {
          console.log(error);
-         res.json({ registered: false, emailExist: false, internalServerError: true });
+        return res.json({ registered: false, emailExist: false, internalServerError: true });
       }
    }
 
