@@ -9,9 +9,9 @@ let Protect = async (req, res, next) => {
             let decoded = jwt.verify(authtoken, process.env.SECRET_KEY);
             if (decoded) {
                 // geting the user and check user have letest jwt token or not
-                let user=await UserModel.findOne({_id:decoded.user._id});
+                let user=await UserModel.findOne({_id:decoded.userid});
                 if(user.Token===authtoken){
-                    req.userid = decoded.user._id;
+                    req.userid = decoded.userid;
                     next();
                 }else{
                     // if user token does not match then we are send unautorized response

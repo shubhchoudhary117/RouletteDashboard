@@ -38,7 +38,7 @@ class AuthController {
          if (user) {
             if (user.Password === password) {
                // generate the jsonwebtoken
-               let token = jsonwebtoken.sign({ user: user }, process.env.SECRET_KEY, { expiresIn: '1d' });
+               let token = jsonwebtoken.sign({ userid: user._id }, process.env.SECRET_KEY, { expiresIn: '1d' });
                // save the token in user details
                let updated = await UserModel.updateOne({ Email: user.Email }, { Token: token })
                console.log(updated)
