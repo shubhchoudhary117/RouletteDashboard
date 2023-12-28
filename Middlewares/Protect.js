@@ -5,6 +5,7 @@ let Protect = async (req, res, next) => {
     try {
         let { authtoken } = req.cookies;
         if (authtoken) {
+            console.log("inside the authtoken")
             let decoded = jwt.verify(authtoken, process.env.SECRET_KEY);
             if (decoded) {
                 // geting the user and check user have letest jwt token or not
