@@ -44,10 +44,10 @@ class AuthController {
                let updated = await UserModel.updateOne({ Email: user.Email }, { Token: token })
                console.log(updated)
                // token expiration date
-               // let expireDate = new Date();
-               // expireDate.setDate(expireDate.getDate() + 7)
+               let expireDate = new Date();
+               expireDate.setDate(expireDate.getDate() + 7)
                // Set the Auth Token In Response Cookies
-               // res.cookie("authtoken", token, { httpOnly: true });
+               res.cookie("authtoken", token, { httpOnly: true });
                return res.json({ login: true, emailIsInvalid: false, passwordIsInvalid: false, Token: token, internalServerError: false })
             } else {
                return res.json({ login: false, Token:null, emailIsInvalid: false, passwordIsInvalid: true })

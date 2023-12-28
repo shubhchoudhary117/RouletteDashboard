@@ -24,7 +24,7 @@ app.use(cookieParser())
 
 // set the URL prefix
 app.use("/roulette/user",AuthRoutes);
-app.use("/roulette/user",UserRoutes)
+app.use("/roulette/user",Protect,UserRoutes)
 
 
 // port of express sever our server is runing on this port number
