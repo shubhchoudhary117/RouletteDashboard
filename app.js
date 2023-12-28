@@ -12,11 +12,12 @@ require("./db/connection.js")
 
 // set the middlewares
 // allow cross origin
-app.use(cors({
-  credentials: true,
-  origin: process.env.FRONTEND_URL ?? "http://localhost:3000",
-  optionsSuccessStatus: 200,
-}))
+// {
+//   credentials: true,
+//   origin: process.env.FRONTEND_URL ?? "http://localhost:3000",
+//   optionsSuccessStatus: 200,
+// }
+app.use(cors())
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
 app.use(cookieParser())

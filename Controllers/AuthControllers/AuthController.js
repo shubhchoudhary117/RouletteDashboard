@@ -1,5 +1,6 @@
 const UserModel = require("../../models/AuthModels/UserModel.js");
-const jsonwebtoken = require("jsonwebtoken")
+const jsonwebtoken = require("jsonwebtoken");
+
 class AuthController {
 
    static onUserRegister = async (req, res) => {
@@ -43,20 +44,20 @@ class AuthController {
                let updated = await UserModel.updateOne({ Email: user.Email }, { Token: token })
                console.log(updated)
                // token expiration date
-               let expireDate = new Date();
-               expireDate.setDate(expireDate.getDate() + 7)
+               // let expireDate = new Date();
+               // expireDate.setDate(expireDate.getDate() + 7)
                // Set the Auth Token In Response Cookies
-               res.cookie("authtoken", token, { httpOnly: true });
-               return res.json({ login: true, emailIsInvalid: false, passwordIsInvalid: false, token: token, internalServerError: false })
+               // res.cookie("authtoken", token, { httpOnly: true });
+               return res.json({ login: true, emailIsInvalid: false, passwordIsInvalid: false, Token: token, internalServerError: false })
             } else {
-               return res.json({ login: false, emailIsInvalid: false, passwordIsInvalid: true })
+               return res.json({ login: false, Token:null, emailIsInvalid: false, passwordIsInvalid: true })
             }
          } else {
-            res.json({ login: false, emailIsInvalid: true, passwordIsInvalid: true, internalServerError: false })
+            res.json({ login: false, emailIsInvalid: true, Token: null, passwordIsInvalid: true, internalServerError: false })
          }
       } catch (error) {
          console.log(error)
-         res.json({ login: false, emailIsInvalid: false, passwordIsInvalid: false, internalServerError: true });
+         res.json({ login: false,Token: null, emailIsInvalid: false, passwordIsInvalid: false, internalServerError: true });
       }
    }
 
