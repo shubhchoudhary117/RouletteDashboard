@@ -12,6 +12,17 @@ class UserController{
             return res.json({authorized:false,user:null,internalServerError:true})
         }
     }
+
+
+    static getUserById=async(req,res)=>{
+        try{
+            let user=await UserModel.findOne({Email:req.body.userid});
+            return res.status(200).json({User:user,internalServerError:false})
+        }catch(error){
+            console.log(error);
+            return res.status(501).json({User:user,internalServerError:false})
+        }
+    }
 }
 
 
