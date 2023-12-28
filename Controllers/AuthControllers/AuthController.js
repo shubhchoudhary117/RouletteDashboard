@@ -46,7 +46,7 @@ class AuthController {
                let expireDate = new Date();
                expireDate.setDate(expireDate.getDate() + 7)
                // Set the Auth Token In Response Cookies
-               res.cookie("authtoken", token, { httpOnly: false });
+               res.cookie("authtoken", token, { httpOnly: true });
                return res.json({ login: true, emailIsInvalid: false, passwordIsInvalid: false, token: token, internalServerError: false })
             } else {
                return res.json({ login: false, emailIsInvalid: false, passwordIsInvalid: true })
