@@ -1,16 +1,16 @@
 const jwt = require("jsonwebtoken");
 const UserModel = require("../models/AuthModels/UserModel");
-
+var session=require("../app.js")
 let Protect = async (req, res, next) => {
     try {
-        let { authtoken } = req.cookies;
+        let  authtoken  = req.session.authtoken;
         if (authtoken) {
             console.log("inside the authtoken")
             let decoded = jwt.verify(authtoken, process.env.SECRET_KEY);
             if (decoded) {
                 // geting the user and check user have letest jwt token or not
                 let user=await UserModel.findOne({_id:decoded.userid});
-                console.log(user)
+                // console.log(user)
                 if(user.Token===authtoken){
                     req.userid = decoded.userid;
                     next();

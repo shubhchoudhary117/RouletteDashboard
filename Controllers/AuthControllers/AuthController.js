@@ -1,6 +1,6 @@
 const UserModel = require("../../models/AuthModels/UserModel.js");
 const jsonwebtoken = require("jsonwebtoken");
-
+var session=require("../../app.js")
 class AuthController {
 
    static onUserRegister = async (req, res) => {
@@ -35,19 +35,21 @@ class AuthController {
       try {
          let { email, password } = req.body;
          let user = await UserModel.findOne({ Email: email });
-         console.log(user)
+       
          if (user) {
             if (user.Password === password) {
                // generate the jsonwebtoken
                let token = jsonwebtoken.sign({ userid: user._id }, process.env.SECRET_KEY, { expiresIn: '1d' });
                // save the token in user details
                let updated = await UserModel.updateOne({ Email: user.Email }, { Token: token })
-               console.log(updated)
+               // console.log(updated)
                // token expiration date
-               let expireDate = new Date();
-               expireDate.setDate(expireDate.getDate() + 7)
+               // let expireDate = new Date();
+               // expireDate.setDate(expireDate.getDate() + 7)
                // Set the Auth Token In Response Cookies
-               res.cookie("authtoken", token, { httpOnly: true });
+               // res.cookie("authtoken", token, { httpOnly: true });
+               req.session.authtoken=token
+               console.log("seted")
                return res.json({ login: true, emailIsInvalid: false, passwordIsInvalid: false, Token: token, internalServerError: false })
             } else {
                return res.json({ login: false, Token:null, emailIsInvalid: false, passwordIsInvalid: true })

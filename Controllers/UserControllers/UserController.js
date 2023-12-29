@@ -3,6 +3,7 @@ const UserModel=require("../../models/AuthModels/UserModel.js")
 class UserController{
     // get a authenticate user
     static getUser=async(req,res)=>{
+        console.log(req.get('origin'))
         let userid=req.userid;
         try{
             let user=await UserModel.findOne({_id:userid});
