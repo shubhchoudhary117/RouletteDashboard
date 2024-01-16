@@ -24,11 +24,13 @@ const store = new MongoDBStore({
 app.use(session({
   secret: process.env.SECRET_KEY,
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   store:store,
   cookie: {
-    maxAge: 60 * 60 * 1000, // 1 hour in milliseconds
-  }
+    maxAge: 60 * 60 * 1000, // 1 hour in milliseconds,
+    sameSite:'None'
+  },
+  origin:"http://localhost:3000"
 }))
 
 // set the middlewares
@@ -49,7 +51,7 @@ app.use("/",(req,res,next)=>{
 })
 // cors policy configuration
 app.use(cors({
-  origin: 'https://roulette-1d15b.web.app',
+  origin: 'http://localhost:3000',
   credentials: true,
   optionsSuccessStatus: 200,
 }));
