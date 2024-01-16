@@ -29,8 +29,7 @@ app.use(session({
   cookie: {
     maxAge: 60 * 60 * 1000, // 1 hour in milliseconds,
     sameSite:'None'
-  },
-  origin:"http://localhost:3000"
+  }
 }))
 
 // set the middlewares
@@ -39,19 +38,10 @@ app.use(express.json());
 app.use(cookieParser())
 
 
-// allow cross origin
-const allowedOrigins = [
-  // 'http://localhost:3000',  // Add other specific origins as needed
-  // // ... other origins ...
-];
-// add the dynamic origin
-app.use("/",(req,res,next)=>{
-  allowedOrigins.push(req.get('origin'));
-  next();
-})
+
 // cors policy configuration
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: 'https://roulette-1d15b.web.app',
   credentials: true,
   optionsSuccessStatus: 200,
 }));

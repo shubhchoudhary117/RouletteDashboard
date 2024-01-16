@@ -48,9 +48,9 @@ class AuthController {
               
                // Set the Auth Token In Response Cookies
                // res.cookie("authtoken", token, { httpOnly: true });
-               req.session.authtoken='Bearer '+token
+               // req.session.authtoken='Bearer '+token
                console.log("seted")
-               return res.json({ login: true, emailIsInvalid: false, passwordIsInvalid: false, Token: 'Bearer '+token, internalServerError: false })
+               return res.json({ login: true, emailIsInvalid: false, passwordIsInvalid: false, Token: token, internalServerError: false })
             } else {
                return res.json({ login: false, Token:null, emailIsInvalid: false, passwordIsInvalid: true })
             }

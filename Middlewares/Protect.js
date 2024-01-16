@@ -3,20 +3,10 @@ const UserModel = require("../models/AuthModels/UserModel");
 var session=require("../app.js")
 let Protect = async (req, res, next) => {
     try {
-        // get header token and session token 
-        let  HeaderToken  = req.headers.authorization;
-        let SessionToken=req.session.authtoken;
+        console.log(req.headers.authorization)
         let authtoken="";
-        if(HeaderToken){
-            authtoken=HeaderToken.split(" ")[1];
-        }else if(SessionToken){
-            authtoken=SessionToken.split(" ")[1]
-        }else{
-            // if no any token in user session and request headers so we will send unauthorized response
-            return res.status(401).json({ badcredintals: true, authorization: false, 
-                tokeninvalid: true, internalServerError: false })
-        }
-        if (authtoken) {
+        if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
+            authtoken=req.headers.authorization.split(" ")[1]
             // after getting authtoken successfully then we are verify the token
             let decoded = jwt.verify(authtoken, Buffer.from(process.env.SECRET_KEY, 'base64'),{algorithm:'HS256' ,subject:'username'});
             if (decoded) {
