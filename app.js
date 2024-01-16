@@ -43,13 +43,21 @@ const allowedOrigins = [
   // // ... other origins ...
 ];
 // add the dynamic origin
-// app.use("/",(req,res,next)=>{
-//   allowedOrigins.push(req.get('origin'));
-//   next();
-// })
+app.use("/",(req,res,next)=>{
+  allowedOrigins.push(req.get('origin'));
+  next();
+})
 // cors policy configuration
 app.use(cors({
-  origin: 'https://roulette-s8be.onrender.com',
+  origin: function (origin, callback) {
+    // List of allowed origins
+    // Check if the origin is in the allowed list or if it's a non-browser request
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 200,
 }));
