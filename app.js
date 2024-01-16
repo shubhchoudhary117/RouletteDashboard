@@ -49,7 +49,7 @@ app.use("/",(req,res,next)=>{
 })
 // cors policy configuration
 app.use(cors({
-  origin: 'https://roulette-1d15b.web.app/',
+  origin: 'https://roulette-1d15b.web.app',
   credentials: true,
   optionsSuccessStatus: 200,
 }));
