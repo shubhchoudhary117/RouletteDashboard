@@ -39,18 +39,18 @@ class AuthController {
          if (user) {
             if (user.Password === password) {
                // generate the jsonwebtoken
-               let token = jsonwebtoken.sign({ userid: user._id }, process.env.SECRET_KEY, { expiresIn: '1d' });
+                // token expiration date
+               let expirationDate=30 * 24 * 60 * 60 * 1000;
+               let token = jsonwebtoken.sign({ userid: user._id }, Buffer.from(process.env.SECRET_KEY, 'base64'),
+                   { expiresIn: expirationDate,algorithm:'HS256' ,subject:'username'});
                // save the token in user details
-               let updated = await UserModel.updateOne({ Email: user.Email }, { Token: token })
-               // console.log(updated)
-               // token expiration date
-               // let expireDate = new Date();
-               // expireDate.setDate(expireDate.getDate() + 7)
+               let updated = await UserModel.updateOne({ Email: user.Email }, { Token:token })
+              
                // Set the Auth Token In Response Cookies
                // res.cookie("authtoken", token, { httpOnly: true });
-               req.session.authtoken=token
+               req.session.authtoken='Bearer '+token
                console.log("seted")
-               return res.json({ login: true, emailIsInvalid: false, passwordIsInvalid: false, Token: token, internalServerError: false })
+               return res.json({ login: true, emailIsInvalid: false, passwordIsInvalid: false, Token: 'Bearer '+token, internalServerError: false })
             } else {
                return res.json({ login: false, Token:null, emailIsInvalid: false, passwordIsInvalid: true })
             }
