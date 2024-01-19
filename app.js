@@ -40,11 +40,7 @@ app.use(cookieParser())
 
 
 // cors policy configuration
-app.use(cors({
-  origin: 'https://roulette-1d15b.web.app',
-  credentials: true,
-  optionsSuccessStatus: 200,
-}));
+app.use(cors());
 
 
 // set the URL prefix
